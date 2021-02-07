@@ -1,4 +1,4 @@
-### Wiring Pi Serial
+# Wiring Pi Serial
 
 Dart implementation of the Wiring Pi serial library.
 
