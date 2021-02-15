@@ -2,7 +2,7 @@ import 'package:ffi/ffi.dart';
 import 'package:wiring_pi_serial/src/serial_native.dart';
 
 /// Default path of the Wiring Pi library.
-const String _defaultPath = '/usr/lib/libwiringPi.so';
+const _DEFAULT_PATH = '/usr/lib/libwiringPi.so';
 
 /// Holds the instance of the Wiring Pi library.
 class SerialInterface {
@@ -15,8 +15,8 @@ class SerialInterface {
   /// to install Wiring Pi correctly.
   /// If you are using the Raspberry Pi 4B you might have to manually upgrade
   /// to version 2.52 (http://wiringpi.com/wiringpi-updated-to-2-52-for-the-raspberry-pi-4b/).
-  SerialInterface({String path: _defaultPath}) {
-    _native = SerialNative(_defaultPath);
+  SerialInterface({String path: _DEFAULT_PATH}) {
+    _native = SerialNative(_DEFAULT_PATH);
   }
 }
 
