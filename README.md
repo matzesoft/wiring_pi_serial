@@ -8,16 +8,13 @@ I mainly created this package for one of my own projects, so I haven't done a lo
 
 Visit this [guide](http://wiringpi.com/download-and-install/) to install the Wiring Pi library on your Raspberry Pi. If your are using a Raspberry Pi 4B you might also check this [post](http://wiringpi.com/wiringpi-updated-to-2-52-for-the-raspberry-pi-4b/).
 
+The library (`.so` file) should be located under `/usr/lib/libwiringPi.so`.
+
 ## Using the package
 
-The first thing you always want to do is to create the `SerialInterface`. You can specific a path to the dynamic library, the default path is `/usr/lib/libwiringPi.so`.
+The first thing todo is to create the `SerialDevice`. It takes the path to the device (default: `/dev/serial0`) and the baud rate of the connection (default: `9600`). Afterwards call the `setup` method.
 ```dart
-final serialInterface = SerialInterface(path: '/path/to/library.so');
-```
-
-Now create the `SerialDevice`. It takes the `SerialInterface` created before, the path to the device (default: `/dev/serial0`) and the baud rate of the connection (default: `9600`). Afterwards call the `setup` method.
-```dart
-final serialDevice = SerialDevice(serialInterface);
+final serialDevice = SerialDevice();
 serialDevice.setup();
 ```
 

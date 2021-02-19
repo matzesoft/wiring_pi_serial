@@ -4,6 +4,9 @@ import 'package:ffi/ffi.dart';
 
 /// Documentation is copied from `http://wiringpi.com/reference/`(15.07.2020, 17:54 CET).
 
+/// Default path of the Wiring Pi library.
+const _WIRING_PI_PATH = '/usr/lib/libwiringPi.so';
+
 /// WiringPi Native: `int serialOpen (char *device, int baud);`
 typedef serial_open = Int32 Function(Pointer<Utf8> device, Int32 baud);
 typedef SerialOpen = int Function(Pointer<Utf8> device, int baud);
@@ -33,7 +36,6 @@ typedef serial_flush = Void Function(Int32 fd);
 typedef SerialFlush = void Function(int fd);
 
 class SerialNative {
-  final String _path = '/usr/lib/libwiringPi.so';
   DynamicLibrary _dylib;
 
   /// This opens and initialises the serial device and sets the baud rate. It
@@ -65,9 +67,9 @@ class SerialNative {
   /// This discards all data received, or waiting to be send down the given device.
   SerialFlush serialFlush;
 
-  SerialNative(String path) {
+  SerialNative({String path: _WIRING_PI_PATH}) {
     try {
-      _dylib = DynamicLibrary.open(_path);
+      _dylib = DynamicLibrary.open(path);
     } on ArgumentError catch (_) {
       throw FileSystemException(
         """

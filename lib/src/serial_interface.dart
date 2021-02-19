@@ -1,46 +1,23 @@
 import 'package:ffi/ffi.dart';
 import 'package:wiring_pi_serial/src/serial_native.dart';
 
-/// Default path of the Wiring Pi library.
-const _DEFAULT_PATH = '/usr/lib/libwiringPi.so';
-
-/// Holds the instance of the Wiring Pi library.
-class SerialInterface {
-  SerialNative _native;
-
-  /// Opens the Wiring Pi library. The [path] should point to the `.so` file.
-  /// The default path is `/usr/lib/libwiringPi.so`.
-  ///
-  /// Check http://wiringpi.com/download-and-install/ on more information how
-  /// to install Wiring Pi correctly.
-  /// If you are using the Raspberry Pi 4B you might have to manually upgrade
-  /// to version 2.52 (http://wiringpi.com/wiringpi-updated-to-2-52-for-the-raspberry-pi-4b/).
-  SerialInterface({String path: _DEFAULT_PATH}) {
-    _native = SerialNative(_DEFAULT_PATH);
-  }
-}
-
 class SerialDevice {
-  SerialNative _native;
+  static SerialNative _native;
   String _device;
   int _baud;
 
   /// Linux file descriptor for the serial port.
   int _deviceIdentifier = -1;
 
-  /// Takes a instance of the `SerialInterface` class. Use the [device] value to
-  /// specific the serial port you want to use. Default is `/dev/serial0`.
-  /// [baud] defines the speed of the port and its default value is `6900`.
+  /// Use the [device] value to specific the serial port you want to use. Default
+  /// is `/dev/serial0`. [baud] defines the speed of the port and its default
+  /// value is `6900`.
   ///
   /// To use the serial device you must call the [setup] method.
-  SerialDevice(
-    SerialInterface interface, {
-    String device: "/dev/serial0",
-    int baud: 9600,
-  }) {
-    _native = interface._native;
-    this._device = device;
-    this._baud = baud;
+  SerialDevice({String device: "/dev/serial0", int baud: 9600}) {
+    _native ??= SerialNative();
+    _device = device;
+    _baud = baud;
   }
 
   /// Path to the serial port.
